@@ -1,0 +1,19 @@
+{
+  "name": "app1",
+  "version": "1.0.0",
+  "description": "test app",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mikarinneoracle/app1.git"
+  },
+  "author": "mika rinne",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mikarinneoracle/app1/issues"
+  },
+  "homepage": "https://github.com/mikarinneoracle/app1#readme"
+}
