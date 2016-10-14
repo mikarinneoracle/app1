@@ -2,8 +2,11 @@
   "name": "app1",
   "version": "1.0.0",
   "description": "test app",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "node ./server.js",
+    "debug": "DEBUG=demo:* node ./server.js",
+    "nodemon": "DEBUG=demo:* nodemon ./server.js",
     "test": "mocha"
   },
   "repository": {
@@ -15,5 +18,15 @@
   "bugs": {
     "url": "https://github.com/mikarinneoracle/app1/issues"
   },
-  "homepage": "https://github.com/mikarinneoracle/app1#readme"
+  "homepage": "https://github.com/mikarinneoracle/app1#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "oracledb": "^1.11.0",
+  },
+  "devDependencies": {
+    "mocha": "^3.1.2",
+    "nodemon": "^1.11.0",
+    "supertest": "^2.0.0"
+  }
 }
