@@ -6,7 +6,7 @@ export USER_PASSWORD=$3
 export APP_NAME=$4
 export ARCHIVE_FILE=$5
 export ARCHIVE_LOCAL=$ARCHIVE_FILE
-export APAAS_HOST=apaas.us.oraclecloud.com
+export APAAS_HOST=apaas.em2.oraclecloud.com
 
 # CREATE CONTAINER
 printf '\n[info] Creating container\n'
