@@ -3,25 +3,26 @@ var oracledb = require('oracledb');
 var dbConfig = require('./dbconfig.js');
 var connection;
 
-testConnection();
-
-function testConnection()
+exports.test = function testConnection(callback)
 {
-  console.log("Testing connection ..");
-  oracledb.getConnection(
-  {
-    user          : dbConfig.user,
-    password      : dbConfig.password,
-    connectString : dbConfig.connectString
-  },
-  function(err, conn) {
-    if (err) {
-        console.error(err.message);
-        return;
-     }
-     console.log("Connected to " + dbConfig.connectString);
-     connection = conn;
-     doRelease();
+  process.nextTick(function() {
+    console.log("Testing connection ..");
+    oracledb.getConnection(
+    {
+      user          : dbConfig.user,
+      password      : dbConfig.password,
+      connectString : dbConfig.connectString
+    },
+    function(err, conn) {
+      if (err) {
+          console.error(err.message);
+          callback(null, err.message + ' ' + dbConfig.connectString);
+       }
+       console.log("Connected to " + dbConfig.connectString);
+       connection = conn;
+       doRelease();
+       callback(null, "OK");
+    });
   });
 }
 
