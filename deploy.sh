@@ -6,7 +6,7 @@ export USER_PASSWORD=$3
 export APP_NAME=$4
 export ARCHIVE_FILE=$5
 export ARCHIVE_LOCAL=$ARCHIVE_FILE
-export APAAS_HOST=apaas.em2.oraclecloud.com
+export APAAS_HOST=apaas.europe.oraclecloud.com
 
 # CREATE CONTAINER
 printf '\n[info] Creating container\n'
@@ -20,6 +20,9 @@ curl -i -X PUT -u ${USER_ID}:${USER_PASSWORD} https://${ID_DOMAIN}.storage.oracl
 let httpCode=`curl -i -X GET -u ${USER_ID}:${USER_PASSWORD} -H "X-ID-TENANT-NAME:${ID_DOMAIN}" -H "Content-Type: multipart/form-data" -sL -w "%{http_code}" https://${APAAS_HOST}/paas/service/apaas/api/v1.1/apps/${ID_DOMAIN}/${APP_NAME} -o /dev/null`
 
 # If application exists...
+printf 'http code:'
+printf $httpCode
+printf '\n' 
 if [ $httpCode == 200 ]
 then
   # Update application
@@ -31,6 +34,3 @@ else
   curl -i -X POST -u ${USER_ID}:${USER_PASSWORD} -H "X-ID-TENANT-NAME:${ID_DOMAIN}" -H "Content-Type: multipart/form-data" -F "name=${APP_NAME}" -F "runtime=node" -F "subscription=Hourly" -F archiveURL=${APP_NAME}/${ARCHIVE_FILE} https://${APAAS_HOST}/paas/service/apaas/api/v1.1/apps/${ID_DOMAIN}
 fi
 printf '\n[info] Deployment complete\n'
-
-//zip app1.zip *
-//mv app1.zip /Users/mikarinne/Downloads/.
