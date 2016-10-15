@@ -20,13 +20,13 @@
   },
   "homepage": "https://github.com/mikarinneoracle/app1#readme",
   "dependencies": {
-    "body-parser": "^1.15.2",
-    "express": "^4.14.0"
   },
   "devDependencies": {
     "mocha": "^3.1.2",
     "nodemon": "^1.11.0",
     "supertest": "^2.0.0",
-    "oracledb": "^1.11.0"
+    "oracledb": "^1.11.0",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
   }
 }
