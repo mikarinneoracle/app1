@@ -5,6 +5,21 @@ var app = require('../app'),
 describe('basic tests', function() {
   var lastUser;
 
+  it('db connect test', function (done) {
+    request(app)
+        .get('/connect')
+        .expect(200)
+        .end(function (err, res) {
+          if (err) return done(err);
+
+          var result = res.body;
+
+          assert.equal(result.success, true);
+
+          done();
+        });
+  });
+
   it('should get a collection of users', function (done) {
 
     request(app)
@@ -113,4 +128,5 @@ describe('basic tests', function() {
                 done();
             });
     });
+
 });

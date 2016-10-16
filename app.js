@@ -1,17 +1,21 @@
 var express = require('express'),
     app = express(),
-    connect = require('./connect.js'),
     bodyParser = require('body-parser'),
+    connect = require('./lib/connect.js'),
     users = require('./lib/users');
 
 module.exports = app;
 app.use(bodyParser.json());
+app.use(express.static(__dirname))
+
+app.get('/', function(req,res){
+	res.send('index.html');
+})
 
 app.get('/connect', function(req, res) {
 
   connect.test(function(err, result) {
     if (err) {
-      // just an example (we don't actually throw any errors in getUsers)
       return res.status(500).json( { success: false, reason: err.message });
     }
 
