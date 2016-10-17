@@ -5,8 +5,6 @@
   "main": "server.js",
   "scripts": {
     "start": "node ./server.js",
-    "preinstall": "rm -rf node_modules app1.zip",
-    "prepublish": "zip -r app1.zip *",
     "test": "mocha"
   },
   "repository": {
