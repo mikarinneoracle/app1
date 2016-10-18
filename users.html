@@ -1,0 +1,13 @@
+<h1>Users</h1>
+<div class="list-group">
+	<a ng-repeat="user in users" class="list-group-item" ng-href="#/{{user.id}}" style="border: 0px;">
+		<div class="list-group-item" style="border: 0px;">
+      <span class="user-name">{{user.id}} </span>
+			<span class="user-name">{{user.name}} </span>
+		</div>
+		<div class="list-group-separator"></div>
+	</a>
+	<div class="list-group-item" ng-if="users.length === 0">
+  	<strong>No users found...</strong>
+	</div>
+</div>
