@@ -1,16 +1,16 @@
 var app = angular
-  .module('app1', [
+  .module('usersApp', [
     'ngRoute',
   ])
 
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'users.html',
+        templateUrl: '../views/users.html',
         controller: 'userController'
       })
       .when('/:id', {
-        templateUrl: 'user.html',
+        templateUrl: '../views/user.html',
         controller: 'userController'
       })
 

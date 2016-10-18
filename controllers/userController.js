@@ -17,4 +17,5 @@ app.controller('userController', function($location, $http, $rootScope, $scope, 
 		console.log(response['users']);
 		$scope.users = response['users'];
 	})
+	
 });

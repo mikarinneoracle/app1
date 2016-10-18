@@ -13,10 +13,6 @@ app.get('/', function(req,res){
 	res.send('index.html')
 })
 
-app.get('/', function(req,res){
-	res.send('index.html');
-})
-
 app.get('/connect', function(req, res) {
 
   connect.test(function(err, result) {
