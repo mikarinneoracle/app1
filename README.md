@@ -14,3 +14,5 @@ Use the repository of your project and specify branch
 ### Execute Shell Command: chmod 777 deploy.sh
 
 ### Execute Shell Command: ./deploy.sh [domain] [user] [password] App1 app1.zip
+
+Finally run Build Now to deploy on the Application Container cloud.
