@@ -1,3 +1,9 @@
-<h1>User</h1>
-<div class="user-name">{{user.id}} </div>
-<div class="user-name">{{user.name}} </div>
+<h1>User {{user.id}}</h1>
+
+<form ng-submit="update(user)" ng-controller="userController">
+	<input type="hidden" ng-model="user.id" name="id" />
+  <input type="text" ng-model="user.name" name="name" />
+  <input type="submit" value="Save" />
+</form>
+
+<a ng-href="#/">Back</a>
