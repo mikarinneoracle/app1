@@ -16,3 +16,15 @@ Use the repository of your project and specify branch.
 ### Execute Shell Command: ./deploy.sh [domain] [user] [password] App1 app1.zip
 
 Finally run Build Now to deploy on the Application Container cloud.
+
+# How to test DB Cloud database connectivity
+
+## Configure database connection to App1 in Application Container service console
+
+### Under App1 deployments tab add Service Bindings and specify you DB Cloud instance.
+
+Save and redeploy.
+
+## Test via browser http(s)://[App1 url]/connect
+
+Should return the connection string when succesfull, otherwise shows the ORA error.
