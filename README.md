@@ -3,7 +3,7 @@
 Create a new build and configure as follows.
 
 ## Add Git repository
-Use the repository of your project and specify branch
+Use the repository of your project and specify branch.
 
 ## Build steps
 
