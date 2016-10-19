@@ -22,7 +22,7 @@ let httpCode=`curl -i -X GET -u ${USER_ID}:${USER_PASSWORD} -H "X-ID-TENANT-NAME
 # If application exists...
 printf 'http code:'
 printf $httpCode
-printf '\n' 
+printf '\n'
 if [ $httpCode == 200 ]
 then
   # Update application
