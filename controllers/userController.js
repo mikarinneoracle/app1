@@ -5,7 +5,7 @@ app.controller('userController', function($location, $http, $rootScope, $scope, 
 		$http.post('/users', user)
 		.success(function(response, err) {
 			$scope.user = response['user'];
-			var location = '/' + $scope.user.id
+			var location = '/' ; //+ $scope.user.id
 			$location.path(location);
 		})
 		.error(function(response, err) {
@@ -15,12 +15,12 @@ app.controller('userController', function($location, $http, $rootScope, $scope, 
 	}
 
 	$scope.update = function(user) {
-		console.log("Updating " + user.name);
 		$http.post('/users', user)
 		.success(function(response, err) {
 			console.log("Updated user " + user.name);
 			$scope.user = response['user'];
-			$scope.message = "Updated user " + user.name;
+			var location = '/';
+			$location.path(location);
 		})
 		.error(function(response, err) {
 			console.log("Could not update user " + user.name);

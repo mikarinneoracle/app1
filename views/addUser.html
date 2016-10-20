@@ -1,8 +1,22 @@
-<h1>Add User</h1>
+<div class="col-md-6 pull-left">
+	<div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Add User</h3>
+    </div>
+    <div class="panel-body">
+  		<form ng-submit="add(user)" ng-controller="userController">
+  			<div class="form-group">
+  				<label for="name">User Name</label>
+  			  <input class="form-control" type="text" id="name" ng-model="user.name" name="name" placeholder="Name"/>
+  			</div>
+  			<button class="btn btn-primary" type="submit" value="add">Add</button>
+        <a ng-href="#/"><button class="btn btn-default" type="button" value="cancel">Cancel</button></a>
+  		</form>
+    </div>
+  </div>
+  <a ng-href="#/">&laquo; Back</a>
+</div>
 
-<form ng-submit="add(user)" ng-controller="userController">
-  <input type="text" ng-model="user.name" name="name" />
-  <input type="submit" value="Save" />
-</form>
-
-<a ng-href="#/">Back</a>
+<script>
+$("#name").focus();
+</script>

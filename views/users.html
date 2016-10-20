@@ -1,15 +1,21 @@
-<h1>Users</h1>
-<div class="list-group">
-	<a ng-repeat="user in users" class="list-group-item" ng-href="#/{{user.id}}" style="border: 0px;">
-		<div class="list-group-item" style="border: 0px;">
-      <span class="user-name">{{user.id}} </span>
-			<span class="user-name">{{user.name}} </span>
-		</div>
-		<div class="list-group-separator"></div>
-	</a>
-	<div class="list-group-item" ng-if="users.length === 0">
-  	<strong>No users found...</strong>
-	</div>
-</div>
+<h2>Users</h2>
+<p>Users in Phonebook</p>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="user in users">
+			<td> <a ng-href="#/{{user.id}}"> {{user.id}}   </a> </td>
+      <td> <a ng-href="#/{{user.id}}"> {{user.name}} </a> </td>
+    </tr>
+		<tr ng-if="users.length === 0">
+			<td><strong>No users found, start by <a ng-href="#/add">adding new</a> </strong></td>
+		</tr>
+  </tbody>
+</table>
 
-<a ng-href="#/add">Add new</a>
+<a ng-href="#/add"><button class="btn btn-default">Add new</button></a>
