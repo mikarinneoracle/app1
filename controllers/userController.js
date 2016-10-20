@@ -14,6 +14,7 @@ app.controller('userController', function($location, $http, $rootScope, $scope, 
 		return;
 	}
 
+
 	$scope.update = function(user) {
 		console.log("Updating " + user.name);
 		$http.post('/users', user)
