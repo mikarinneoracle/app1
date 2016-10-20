@@ -2,11 +2,12 @@ app.controller('userController', function($location, $http, $rootScope, $scope, 
 {
 
 	$scope.add = function(user) {
-		console.log("Adding " + user.name);
 		$http.post('/users', user)
 		.success(function(response, err) {
-			console.log("Added user " + user.name);
 			$scope.user = response['user'];
+			var location = '/' + $scope.user.id
+			$location.path(location);
+			return;
 		})
 		.error(function(response, err) {
 			console.log("Could not add user " + user.name);
@@ -19,6 +20,8 @@ app.controller('userController', function($location, $http, $rootScope, $scope, 
 		.success(function(response, err) {
 			console.log("Updated user " + user.name);
 			$scope.user = response['user'];
+			$scope.message = "Updated user " + user.name;
+			return;
 		})
 		.error(function(response, err) {
 			console.log("Could not update user " + user.name);
