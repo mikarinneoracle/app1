@@ -5,10 +5,14 @@
 	  </div>
 	  <div class="panel-body">
 			<form ng-submit="update(user)" ng-controller="userController">
+				<input type="hidden" ng-model="user.id" name="id" />
 				<div class="form-group">
 					<label for="name">Name</label>
-					<input type="hidden" ng-model="user.id" name="id" />
 				  <input class="form-control" type="text" id="name" ng-model="user.name" name="name" placeholder="Name"/>
+				</div>
+				<div class="form-group">
+					<label for="name">Phone</label>
+					<input class="form-control" type="text" id="phone" ng-model="user.phone" name="phone" placeholder="Phone"/>
 				</div>
 				<button class="btn btn-primary" type="submit">Save</button>
 				<a ng-href="#/"><button class="btn btn-default" type="button" value="cancel">Cancel</button></a>

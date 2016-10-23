@@ -3,13 +3,13 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>#</th>
+      <th>Phone number</th>
       <th>Name</th>
     </tr>
   </thead>
   <tbody>
     <tr ng-repeat="user in users">
-			<td> <a ng-href="#/{{user.id}}"> {{user.id}}   </a> </td>
+			<td> <a ng-href="#/{{user.id}}"> {{user.phone}}   </a> </td>
       <td> <a ng-href="#/{{user.id}}"> {{user.name}} </a> </td>
     </tr>
 		<tr ng-if="users.length === 0">

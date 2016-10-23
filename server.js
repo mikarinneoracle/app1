@@ -1,5 +1,6 @@
 var http = require('http');
 var express = require('express');
+var multer  =   require('multer');
 var bodyParser = require('body-parser');
 var port = process.env.PORT;
 var app = express();
@@ -53,6 +54,31 @@ app.get('/users/:id', function(req, res) {
     res.send({ success: true, user: result });
   });
 
+});
+
+var storage =   multer.diskStorage({
+  destination: function (req, file, callback) {
+		console.log(req.body.user);
+		console.log(file);
+    callback(null, './uploads');
+  },
+  filename: function (req, file, callback) {
+		console.log(req.body.user);
+		callback(null, file.originalname);
+  }
+});
+var upload = multer({ storage : storage}).single('userPhoto');
+
+app.post('/upload',function(req,res){
+    upload(req,res,function(err) {
+        if(err) {
+					  console.log(err);
+						res.redirect('/#/add');
+            return;
+        }
+        console.log("File is uploaded");
+				res.redirect('/#/add');
+    });
 });
 
 app.post('/users', function(req, res) {

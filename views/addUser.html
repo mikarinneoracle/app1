@@ -8,10 +8,22 @@
   			<div class="form-group">
   				<label for="name">Name</label>
   			  <input class="form-control" type="text" id="name" ng-model="user.name" name="name" placeholder="Name"/>
+        </div>
+        <div class="form-group">
+  				<label for="name">Phone</label>
+  			  <input class="form-control" type="text" id="phone" ng-model="user.phone" name="phone" placeholder="Phone"/>
   			</div>
   			<button class="btn btn-primary" type="submit" value="add">Add</button>
         <a ng-href="#/"><button class="btn btn-default" type="button" value="cancel">Cancel</button></a>
   		</form>
+
+      <p>
+      <form action="/upload" enctype="multipart/form-data" method="post">
+				<input type="hidden" name="user" value="1">
+        <input type="file" name="userPhoto">
+        <button class="btn btn-primary" type="submit" value="upload">Upload</button>
+      </form>
+
     </div>
   </div>
   <a ng-href="#/">&laquo; Back</a>
