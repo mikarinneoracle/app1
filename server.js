@@ -114,7 +114,7 @@ app.post('/users', function(req, res) {
 
 });
 
-app.post('/addphoto/',function(req,res) {
+app.post('/photos/',function(req,res) {
 	var user = req.body;
 	var imageBuffer = decodeBase64Image(user.photo);
 	var type = imageBuffer.type.split('/')[1];
@@ -148,7 +148,7 @@ function decodeBase64Image(dataString)
   return response;
 }
 
-app.get('/removephoto/:id', function(req, res) {
+app.delete('/photos/:id', function(req, res) {
 	var user = new Array();
 	user.id = req.params.id;
 	user.photo = "";

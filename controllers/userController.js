@@ -30,7 +30,7 @@ app.controller('userController', function($location, $http, $rootScope, $scope, 
 	}
 
 	$scope.removePhoto = function(user) {
-		$http.get('/removePhoto/' + user.id)
+		$http.delete('/photos/' + user.id)
 		.success(function(response, err) {
 			console.log("removed photo");
 			var location = '/';
