@@ -2,6 +2,7 @@ var http = require('http');
 var express = require('express');
 var multer  =   require('multer');
 var bodyParser = require('body-parser');
+var fs = require('fs');
 var port = process.env.PORT;
 var app = express();
 var connect = require('./lib/connect.js');
@@ -113,6 +114,40 @@ app.post('/users', function(req, res) {
 
 });
 
+app.post('/addphoto/',function(req,res) {
+	var user = req.body;
+	var imageBuffer = decodeBase64Image(user.photo);
+	var type = imageBuffer.type.split('/')[1];
+	user.photo = user.id + "." + type;
+	var fileName = "./uploads/" + user.photo;
+	console.log(fileName);
+	users.updateUserPhoto(user, function(err, result) {
+		if (err) {
+			return res.status(400).json( { success: false, reason: err.message });
+		}
+		fs.writeFile(fileName, imageBuffer.data), function(err) {
+			return res.status(400).json( { success: false, reason: err.message });
+		}
+		res.send({ success: true, image: user.photo });
+	});
+});
+
+function decodeBase64Image(dataString)
+{
+  var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+  var response = new Array();
+
+  if (matches.length !== 3)
+  {
+    return new Error('Invalid input string');
+  }
+
+  response.type = matches[1];
+  response.data = new Buffer(matches[2], 'base64');
+
+  return response;
+}
+
 app.get('/removephoto/:id', function(req, res) {
 	var user = new Array();
 	user.id = req.params.id;
@@ -121,7 +156,7 @@ app.get('/removephoto/:id', function(req, res) {
 		if (err) {
 			return res.status(400).json( { success: false, reason: err.message });
 		}
-		res.send({ success: true, user: result });
+		res.send({ success: true });
 	});
 });
 
