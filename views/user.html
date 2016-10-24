@@ -1,5 +1,5 @@
 <div class="col-md-6 pull-right" ng-if="user.photo">
-	<img class="photo" src="./uploads/{{user.photo}}">
+	<img class="photo" ng-src="./uploads/{{user.photo}}">
 	<br>
 	<a href ng-click="removePhoto(user)">Remove</a>
 </div>
