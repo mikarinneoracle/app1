@@ -1,25 +1,58 @@
+<div class="col-md-6 pull-right" ng-if="user.photo">
+	<img class="photo" src="./uploads/{{user.photo}}">
+	<br>
+	<a href ng-click="removePhoto(user)">Remove</a>
+</div>
+
 <div class="col-md-6 pull-left">
-	<div class="panel panel-default">
-	  <div class="panel-heading">
-	    <h3 class="panel-title">User #{{user.id}}</h3>
-	  </div>
-	  <div class="panel-body">
-			<form ng-submit="update(user)" ng-controller="userController">
-				<input type="hidden" ng-model="user.id" name="id" />
-				<div class="form-group">
-					<label for="name">Name</label>
-				  <input class="form-control" type="text" id="name" ng-model="user.name" name="name" placeholder="Name"/>
-				</div>
-				<div class="form-group">
-					<label for="name">Phone</label>
-					<input class="form-control" type="text" id="phone" ng-model="user.phone" name="phone" placeholder="Phone"/>
-				</div>
+	<div>
+		<form ng-submit="update(user)" ng-controller="userController">
+			<input type="hidden" ng-model="user.id" name="id" />
+			<div class="form-group">
+				<label for="name">Name</label>
+			  <input class="form-control" type="text" id="name" ng-model="user.name" name="name" placeholder="Name"/>
+			</div>
+			<div class="form-group">
+				<label for="name">Phone</label>
+				<input class="form-control" type="text" id="phone" ng-model="user.phone" name="phone" placeholder="Phone"/>
+			</div>
+			<div ng-if="message">
+				<button class="btn btn-default" type="submit">Save</button>
+				<a ng-href="#/"><button class="btn btn-default" type="button" value="cancel">Cancel</button></a>
+			</div>
+			<div ng-if="!message">
 				<button class="btn btn-primary" type="submit">Save</button>
 				<a ng-href="#/"><button class="btn btn-default" type="button" value="cancel">Cancel</button></a>
-			</form>
-	  </div>
-	</div>
-	<a ng-href="#/">&laquo; Back</a>
+			</div>
+		</form>
+
+		<p>
+		<br>
+		<div class="alert alert-success" ng-if="message">
+			{{message}}
+		</div>
+		<div class="alert alert-info" ng-if="!user.photo && !message">
+				User does not have a photo. Please upload.
+		</div>
+    <form action="/upload" enctype="multipart/form-data" method="post">
+			<div class="form-group">
+				<label for="userPhoto">Photo</label>
+				<input type="hidden" name="user" value="{{user.id}}">
+        <input type="file" name="userPhoto">
+			</div>
+			<div ng-if="!user.photo && message">
+				<button class="btn btn-success" type="submit" value="upload">Upload</button>
+				<a ng-href="#/"><button class="btn btn-default" type="button" value="cancel">Cancel</button></a>
+			</div>
+			<div ng-if="!user.photo && !message">
+				<button class="btn btn-info" type="submit" value="upload">Upload</button>
+				<a ng-href="#/"><button class="btn btn-default" type="button" value="cancel">Cancel</button></a>
+			</div>
+			<div ng-if="user.photo">
+				<button class="btn btn-default" type="submit" value="upload">Upload</button>
+			</div>
+    </form>
+  </div>
 </div>
 
 <script>

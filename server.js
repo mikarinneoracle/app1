@@ -58,13 +58,20 @@ app.get('/users/:id', function(req, res) {
 
 var storage =   multer.diskStorage({
   destination: function (req, file, callback) {
-		console.log(req.body.user);
-		console.log(file);
     callback(null, './uploads');
   },
   filename: function (req, file, callback) {
-		console.log(req.body.user);
-		callback(null, file.originalname);
+		var tokens = file.originalname.split(".");
+		var filename = req.body.user + "." + (tokens.length == 2 ? tokens[1] : "");
+		var user = new Array();
+		user.id = req.body.user;
+		user.photo = filename;
+		users.updateUserPhoto(user, function(err, result) {
+			if (err) {
+		  	console.log(err);
+		  }
+		});
+		callback(null, filename); // replaces the file.originalname
   }
 });
 var upload = multer({ storage : storage}).single('userPhoto');
@@ -73,11 +80,10 @@ app.post('/upload',function(req,res){
     upload(req,res,function(err) {
         if(err) {
 					  console.log(err);
-						res.redirect('/#/add');
+						res.redirect('/#/');
             return;
         }
-        console.log("File is uploaded");
-				res.redirect('/#/add');
+				res.redirect('/#/');
     });
 });
 
@@ -105,6 +111,18 @@ app.post('/users', function(req, res) {
 	  });
 	}
 
+});
+
+app.get('/removephoto/:id', function(req, res) {
+	var user = new Array();
+	user.id = req.params.id;
+	user.photo = "";
+	users.updateUserPhoto(user, function(err, result) {
+		if (err) {
+			return res.status(400).json( { success: false, reason: err.message });
+		}
+		res.send({ success: true, user: result });
+	});
 });
 
 app.listen(port, function() {

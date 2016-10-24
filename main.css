@@ -1,6 +1,18 @@
-.user-name {
-font-size: 40px;
-  font-weight: 30;
-  text-align: left;
+.large {
+  font-size: 20px;
+}
 
+.photoSmall {
+  border: 0;
+  width: 50px;
+}
+
+.photo {
+  border: 0;
+  max-width: 300px;
+}
+
+.photoEmpty {
+  border: 0;
+  font-size: 30px;
 }

@@ -1,16 +1,23 @@
-<h2>Users</h2>
-<p>Users in Phonebook</p>
+<h2>Phonebook</h2>
+<p>
 <table class="table table-hover">
   <thead>
     <tr>
       <th>Phone number</th>
       <th>Name</th>
+      <th>Photo</th>
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="user in users">
+    <tr ng-repeat="user in users | orderBy:'name'">
 			<td> <a ng-href="#/{{user.id}}"> {{user.phone}}   </a> </td>
       <td> <a ng-href="#/{{user.id}}"> {{user.name}} </a> </td>
+      <td>
+        <a ng-href="#/{{user.id}}" ng-if="user.photo">
+          <img class="photoSmall" src="./uploads/{{user.photo}}">
+        </a>
+        <a ng-if="!user.photo" ng-href="#/{{user.id}}?o=new"><div class="glyphicon glyphicon-user photoEmpty"></div></a>
+      </td>
     </tr>
 		<tr ng-if="users.length === 0">
 			<td><strong>No users found, start by <a ng-href="#/add">adding new</a> </strong></td>
