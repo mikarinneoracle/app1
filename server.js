@@ -3,6 +3,7 @@ var express = require('express');
 var multer  =   require('multer');
 var bodyParser = require('body-parser');
 var fs = require('fs');
+var swaggerJSDoc = require('swagger-jsdoc');
 var port = process.env.PORT;
 var app = express();
 var connect = require('./lib/connect.js');
@@ -26,6 +27,51 @@ app.get('/connect', function(req, res) {
   });
 });
 
+/**
+ * @swagger
+ * definition:
+ *   User:
+ *     properties:
+ *       id:
+ *         type: integer
+ *       name:
+ *         type: string
+ *       phone:
+ *         type: string
+ *       photo:
+ *         type: string
+ */
+
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     tags:
+ *       - Users
+ *     description: Returns all users
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: An array of users
+ *         schema:
+ *           properties:
+ *            success:
+ *               type: boolean
+ *            users:
+ *               type: array
+ *               items: {
+ *                  "$ref": "#/definitions/User"
+ *               }
+ *       400:
+ *         description: Error
+ *         schema:
+ *           properties:
+ *            success:
+ *               type: boolean
+ *            reason:
+ *               type: string
+ */
 app.get('/users', function(req, res) {
 
   users.getUsers(function(err, result) {
@@ -38,6 +84,48 @@ app.get('/users', function(req, res) {
   });
 
 });
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   get:
+ *     tags:
+ *       - Users
+ *     description: Returns a single user
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         description: Users's id
+ *         in: path
+ *         required: true
+ *         type: integer
+ *     responses:
+ *       200:
+ *         description: A user if found
+ *         schema:
+ *           properties:
+ *            success:
+ *              type: boolean
+ *            user:
+ *              "$ref": "#/definitions/User"
+ *       404:
+ *         description: Not found
+ *         schema:
+ *           properties:
+ *            success:
+ *               type: boolean
+ *            reason:
+ *               type: string
+ *       400:
+ *         description: Error
+ *         schema:
+ *           properties:
+ *            success:
+ *               type: boolean
+ *            reason:
+ *               type: string
+ */
 
 app.get('/users/:id', function(req, res) {
   var id = req.params.id;
@@ -88,31 +176,97 @@ app.post('/upload',function(req,res){
     });
 });
 
+/**
+ * @swagger
+ * /users:
+ *   post:
+ *     tags:
+ *       - Users
+ *     description: Inserts a single user or updates if ID given. Please use the fields in User json.
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user
+ *         description: Json containing the user data. If contains ID will update, otherwise will insert. Photo won't be updated even if given, please use the photos -service.
+ *         in: body
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Inserted or updated user
+ *         schema:
+ *           properties:
+ *            success:
+ *              type: boolean
+ *            user:
+ *              "$ref": "#/definitions/User"
+ *       400:
+ *         description: Error
+ *         schema:
+ *           properties:
+ *            success:
+ *               type: boolean
+ *            reason:
+ *               type: string
+ */
+
 app.post('/users', function(req, res) {
   var user = req.body;
+
+  console.log(req.body);
 
   if(user.id)
 	{
 		users.updateUser(user, function(err, result) {
 		if (err) {
-	      // just an  example (bad request) since the only error that we throw is if missing user name
 	      return res.status(400).json( { success: false, reason: err.message });
 	    }
-
 	    res.send({ success: true, user: result });
 	  });
 	} else {
 	  users.addUser(user, function(err, result) {
 		if (err) {
-	      // just an  example (bad request) since the only error that we throw is if missing user name
 	      return res.status(400).json( { success: false, reason: err.message });
 	    }
-
 	    res.send({ success: true, user: result });
 	  });
 	}
 
 });
+
+/**
+ * @swagger
+ * /photos:
+ *   post:
+ *     tags:
+ *       - Photos
+ *     description: Adds a photo in the base-64 format to a user identified by ID.
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: photo
+ *         description: Json containing the user id and photo in base-64 format
+ *         in: body
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Name of the image added for the user
+ *         schema:
+ *           properties:
+ *            success:
+ *              type: boolean
+ *            image:
+ *              type: string
+ *       400:
+ *         description: Error
+ *         schema:
+ *           properties:
+ *            success:
+ *               type: boolean
+ *            reason:
+ *               type: string
+ */
 
 app.post('/photos/',function(req,res) {
 	var user = req.body;
@@ -148,6 +302,38 @@ function decodeBase64Image(dataString)
   return response;
 }
 
+/**
+ * @swagger
+ * /photos/{id}:
+ *   delete:
+ *     tags:
+ *       - Photos
+ *     description: Deletes a user's photo
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         description: Users's id
+ *         in: path
+ *         required: true
+ *         type: integer
+ *     responses:
+ *       200:
+ *         description: Status success if user found and delete succesfull
+ *         schema:
+ *           properties:
+ *            success:
+ *              type: boolean
+ *       400:
+ *         description: Error
+ *         schema:
+ *           properties:
+ *            success:
+ *               type: boolean
+ *            reason:
+ *               type: string
+ */
+
 app.delete('/photos/:id', function(req, res) {
 	var user = new Array();
 	user.id = req.params.id;
@@ -162,4 +348,31 @@ app.delete('/photos/:id', function(req, res) {
 
 app.listen(port, function() {
   console.log('server listening on port ' + port);
+});
+
+// swagger definition
+var swaggerDefinition = {
+  info: {
+    title: 'Node Swagger API',
+    version: '1.0.0',
+    description: 'Phonebook RESTful API with Swagger',
+  },
+  basePath: '/',
+};
+
+// options for the swagger docs
+var options = {
+  // import swaggerDefinitions
+  swaggerDefinition: swaggerDefinition,
+  // path to the API docs
+  apis: ['./server.js'],
+};
+
+// initialize swagger-jsdoc
+var swaggerSpec = swaggerJSDoc(options);
+
+// serve swagger
+app.get('/swagger.json', function(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
 });
