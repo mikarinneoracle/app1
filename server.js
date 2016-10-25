@@ -308,7 +308,7 @@ function decodeBase64Image(dataString)
  *   delete:
  *     tags:
  *       - Photos
- *     description: Deletes a user's photo
+ *     description: Deletes user's photo based on given user ID
  *     produces:
  *       - application/json
  *     parameters:
@@ -319,7 +319,7 @@ function decodeBase64Image(dataString)
  *         type: integer
  *     responses:
  *       200:
- *         description: Status success if user found and delete succesfull
+ *         description: Status success if user found and delete successful
  *         schema:
  *           properties:
  *            success:
