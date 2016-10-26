@@ -1,4 +1,3 @@
-var http = require('http');
 var express = require('express');
 var multer  =   require('multer');
 var bodyParser = require('body-parser');
@@ -15,6 +14,34 @@ app.use(express.static(__dirname));
 app.get('/', function(req,res){
 	res.send('index.html')
 })
+
+/**
+ * @swagger
+ * /connect:
+ *   get:
+ *     tags:
+ *       - DB Pool
+ *     description: Tests database pool connection configured to the server
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Returns the connect string when successful
+ *         schema:
+ *           properties:
+ *            success:
+ *               type: boolean
+ *            connect:
+ *               type: string
+ *       500:
+ *         description: Error
+ *         schema:
+ *           properties:
+ *            success:
+ *               type: boolean
+ *            reason:
+ *               type: string
+ */
 
 app.get('/connect', function(req, res) {
 
