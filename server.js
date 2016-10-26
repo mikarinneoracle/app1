@@ -101,14 +101,15 @@ app.get('/connect', function(req, res) {
  */
 app.get('/users', function(req, res) {
 
-  users.getUsers(function(err, result) {
-    if (err) {
-      // just an example (we don't actually throw any errors in getUsers)
-      return res.status(500).json( { success: false, reason: err.message });
-    }
+  connect.getPool(function(err, dbPool) {
+	  users.getUsers(dbPool, function(err, result) {
+	    if (err) {
+	      return res.status(500).json( { success: false, reason: err.message });
+	    }
 
-    res.send({ success: true, users: result });
-  });
+	    res.send({ success: true, users: result });
+	  });
+	});
 
 });
 
