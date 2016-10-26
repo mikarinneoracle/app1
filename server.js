@@ -102,6 +102,10 @@ app.get('/connect', function(req, res) {
 app.get('/users', function(req, res) {
 
   connect.getPool(function(err, dbPool) {
+		if(err)
+		{
+			return res.status(500).json( { success: false, reason: 'could not get pool' });
+		}
 	  users.getUsers(dbPool, function(err, result) {
 	    if (err) {
 	      return res.status(500).json( { success: false, reason: err.message });
