@@ -246,25 +246,28 @@ app.post('/upload',function(req,res){
 app.post('/users', function(req, res) {
   var user = req.body;
 
-  console.log(req.body);
-
-  if(user.id)
-	{
-		users.updateUser(user, function(err, result) {
-		if (err) {
-	      return res.status(400).json( { success: false, reason: err.message });
-	    }
-	    res.send({ success: true, user: result });
-	  });
-	} else {
-	  users.addUser(user, function(err, result) {
-		if (err) {
-	      return res.status(400).json( { success: false, reason: err.message });
-	    }
-	    res.send({ success: true, user: result });
-	  });
-	}
-
+	connect.getPool(function(err, dbPool) {
+	 	if(err)
+	 	{
+	 		return res.status(500).json( { success: false, reason: 'could not get pool' });
+	 	}
+	  if(user.id)
+		{
+			users.updateUser(dbPool, user, function(err, result) {
+			if (err) {
+		      return res.status(400).json( { success: false, reason: err.message });
+		    }
+		    res.send({ success: true, user: result });
+		  });
+		} else {
+		  users.addUser(dbPool, user, function(err, result) {
+			if (err) {
+		      return res.status(400).json( { success: false, reason: err.message });
+		    }
+		    res.send({ success: true, user: result });
+		  });
+		}
+ });
 });
 
 /**
