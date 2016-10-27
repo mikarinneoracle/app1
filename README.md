@@ -29,6 +29,6 @@ Save and redeploy.
 
 Should return the connection string when successful, otherwise shows the ORA error.
 
-# swagger
+# Swagger
 
-## Swagger based REST documentation and testing via browser http(s)://[App1 url]/api-docs
+### Swagger based REST documentation and testing via browser http(s)://[App1 url]/api-docs
