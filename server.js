@@ -159,22 +159,23 @@ app.get('/users', function(req, res) {
  *               type: string
  */
 
-app.get('/users/:id', function(req, res) {
+ app.get('/users/:id', function(req, res) {
   var id = req.params.id;
-
-  users.getUser(id, function(err, result) {
-    if (err) {
-      // just an example (bad request)
-      return res.status(400).json( { success: false, reason: err.message });
-    }
-
-    if (!result) {
+  connect.getPool(function(err, dbPool) {
+ 	if(err)
+ 	{
+ 		return res.status(500).json( { success: false, reason: 'could not get pool' });
+ 	}
+ 	users.getUser(dbPool, id, function(err, result) {
+ 		if (err) {
+ 			return res.status(400).json( { success: false, reason: err.message });
+ 		}
+		if (!result) {
       return res.status(404).json( { success: false, reason: 'user id not found' });
     }
-
-    res.send({ success: true, user: result });
-  });
-
+ 		res.send({ success: true, user: result });
+ 	});
+ });
 });
 
 var storage =   multer.diskStorage({

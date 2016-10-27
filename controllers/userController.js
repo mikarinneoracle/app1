@@ -59,9 +59,12 @@ app.controller('userController', function($location, $http, $rootScope, $scope, 
 		$scope.message = "Please upload a user photo.";
 	}
 
-	$http.get('/users').success(function(response, err) {
-		console.log(response['users']);
-		$scope.users = response['users'];
-	})
+	if($location.path() == '/')
+	{
+		$http.get('/users').success(function(response, err) {
+			$scope.users = response['users'];
+			console.log("FOUND " + $scope.users.length + " USERS");
+		});
+	}
 
 });
