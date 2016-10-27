@@ -188,10 +188,16 @@ var storage =   multer.diskStorage({
 		var user = new Array();
 		user.id = req.body.user;
 		user.photo = filename;
-		users.updateUserPhoto(user, function(err, result) {
-			if (err) {
-		  	console.log(err);
-		  }
+		connect.getPool(function(err, dbPool) {
+		 	if(err)
+		 	{
+		 		return res.status(500).json( { success: false, reason: 'could not get pool' });
+		 	}
+			users.updateUserPhoto(dbPool, user, function(err, result) {
+				if (err) {
+			  	console.log(err);
+			  }
+			});
 		});
 		callback(null, filename); // replaces the file.originalname
   }
@@ -310,15 +316,20 @@ app.post('/photos/',function(req,res) {
 	var type = imageBuffer.type.split('/')[1];
 	user.photo = user.id + "." + type;
 	var fileName = "./uploads/" + user.photo;
-	console.log(fileName);
-	users.updateUserPhoto(user, function(err, result) {
-		if (err) {
-			return res.status(400).json( { success: false, reason: err.message });
-		}
-		fs.writeFile(fileName, imageBuffer.data), function(err) {
-			return res.status(400).json( { success: false, reason: err.message });
-		}
-		res.send({ success: true, image: user.photo });
+	connect.getPool(function(err, dbPool) {
+	 	if(err)
+	 	{
+	 		return res.status(500).json( { success: false, reason: 'could not get pool' });
+	 	}
+		users.updateUserPhoto(dbPool, user, function(err, result) {
+			if (err) {
+				return res.status(400).json( { success: false, reason: err.message });
+			}
+			fs.writeFile(fileName, imageBuffer.data), function(err) {
+				return res.status(400).json( { success: false, reason: err.message });
+			}
+			res.send({ success: true, image: user.photo });
+		});
 	});
 });
 
@@ -374,11 +385,17 @@ app.delete('/photos/:id', function(req, res) {
 	var user = new Array();
 	user.id = req.params.id;
 	user.photo = "";
-	users.updateUserPhoto(user, function(err, result) {
-		if (err) {
-			return res.status(400).json( { success: false, reason: err.message });
+	connect.getPool(function(err, dbPool) {
+		if(err)
+		{
+			return res.status(500).json( { success: false, reason: 'could not get pool' });
 		}
-		res.send({ success: true });
+		users.updateUserPhoto(dbPool, user, function(err, result) {
+			if (err) {
+				return res.status(400).json( { success: false, reason: err.message });
+			}
+			res.send({ success: true });
+		});
 	});
 });
 
