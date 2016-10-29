@@ -185,7 +185,7 @@ var storage =   multer.diskStorage({
   filename: function (req, file, callback) {
 		var tokens = file.originalname.split(".");
 		var filename = req.body.user + "." + (tokens.length == 2 ? tokens[1] : "");
-		var user = new Array();
+		var user = [];
 		user.id = req.body.user;
 		user.photo = filename;
 		connect.getPool(function(err, dbPool) {
@@ -336,7 +336,7 @@ app.post('/photos/',function(req,res) {
 function decodeBase64Image(dataString)
 {
   var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-  var response = new Array();
+  var response = [];
 
   if (matches.length !== 3)
   {
@@ -382,7 +382,7 @@ function decodeBase64Image(dataString)
  */
 
 app.delete('/photos/:id', function(req, res) {
-	var user = new Array();
+	var user = [];
 	user.id = req.params.id;
 	user.photo = "";
 	connect.getPool(function(err, dbPool) {
